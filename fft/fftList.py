@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt 
 import time
 import numpy as np
-from cmake_example import Bluestein as blue_cpp
+# from cmake_example import Bluestein as blue_cpp 
+# library I made to test my cpp. Used pybind
 import math
 from numba import jit
 pi = np.pi
@@ -156,7 +157,7 @@ def ifft_np(x):
 numba_warm_up = np.array([1,2,3,4,5])
 bluestein_np(numba_warm_up)
 
-sr = 10000
+sr = 100000
 t0 = 0
 tn = 1
 t = np.arange(t0,tn,1/sr)
@@ -171,29 +172,34 @@ res = {}
 start = time.time()
 fftcpp = blue_cpp(signal_list)
 end = time.time()
-res["c++"]=end - start
+res["my c++"]=end - start
 
 start = time.time()
 fftnp = np.fft.fft(signal)
 end = time.time()
-res["numpy"]=end - start
+res["np.fft.fft"]=end - start
 
 
 start = time.time()
 fftpt = bluestein_np(signal)
 end = time.time()
-res["py vec"]=end - start
+res["my np"]=end - start
 
 
 start = time.time()
 fftli = bluestein_list(signal)
 end = time.time()
-res["list"]=end - start
+res["my list"]=end - start
 
 
 
 print(f'results: {[False,True][np.sum(np.allclose(np.round(fftnp,2), np.round(np.array(fftcpp.getFourCoeff())),2) *np.allclose(np.round(fftnp,2), np.round(fftpt),2) *np.allclose(np.round(fftnp,2), np.round(np.array(fftli)),2))]}')
 
 
+# results on data 100000 long:
+   # {'my c++': 0.17369699478149414,
+   #  'np.fft.fft': 0.0009508132934570312,
+   #  'my np': 0.05278420448303223,
+   #  'my list': 6.277495861053467}    
 
-#%
+#%%
