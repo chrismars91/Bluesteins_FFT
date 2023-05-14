@@ -195,11 +195,10 @@ res["my list"]=end - start
 
 print(f'results: {[False,True][np.sum(np.allclose(np.round(fftnp,2), np.round(np.array(fftcpp.getFourCoeff())),2) *np.allclose(np.round(fftnp,2), np.round(fftpt),2) *np.allclose(np.round(fftnp,2), np.round(np.array(fftli)),2))]}')
 
-
 # results on data 100000 long:
-   # {'my c++': 0.17369699478149414,
-   #  'np.fft.fft': 0.0009508132934570312,
-   #  'my np': 0.05278420448303223,
-   #  'my list': 6.277495861053467}    
-
+    # {'my c++': 0.05332493782043457,
+    #  'np.fft.fft': 0.009668827056884766,
+    #  'my np': 0.06859493255615234,
+    #  'my list': 6.298625707626343}   
+    
 #%%
